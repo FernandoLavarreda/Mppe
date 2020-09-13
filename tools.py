@@ -110,16 +110,26 @@ def transfer_files(dir1, dir2, interval_="10", file_extensions=()):
 def remove(folder, file_extensions=()):
     """Delete a path given"""
     if os.path.isfile(folder):
-        os.remove(folder)
+        try:
+            os.remove(folder)
+        except Exception:
+            return "Not able to remove file"
     elif os.path.isdir(folder):
         if file_extensions:
             content = list_files(folder, file_extensions)
             for ct in content:
-                os.remove(folder+"\\"+ct)
+                try:
+                    os.remove(folder+"\\"+ct)
+                except Exception:
+                    return "Not able to remove file"
         else:
-            shutil.rmtree(folder)
+            try:
+                shutil.rmtree(folder)
+            except Exception:
+                return "Not able to remove folder"
     else:
-        print("Error\nPath: "+folder+" NOT FOUND")
+        return("Error\nPath: "+folder+" NOT FOUND")
+    return "Path removed successfully"
 
 def read(path):
     """Read a text file and print it to console"""
