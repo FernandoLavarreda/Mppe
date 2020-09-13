@@ -135,11 +135,11 @@ def read(path):
     """Read a text file and print it to console"""
     try:
         with open(path, "r") as rd:
-            print(rd.read())
+            return rd.read()
     except FileNotFoundError:
-        print("File Not Found")
+        return "File Not Found"
     except Exception:
-        print("An Error ocurred.")
+        return "An Error ocurred."
 
 if __name__ == "__main__":
     pass

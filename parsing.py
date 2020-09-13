@@ -1,11 +1,12 @@
 # Fernando José Lavarreda Urizar
 # fernandolavarredau@gmail.com
 """Parse User commands"""
+import shell
 import tools
 
-# Set of executable commands (aliases for command) : (lower-arg-limit,upper-arg-limit,ends-with-multi-args,command-to-execute)
+# Set of executable commands (aliases for command, command) : (lower-arg-limit,upper-arg-limit,ends-with-multi-args,command-to-execute)
 ACCEPTED = {("-e", "-editor") : (0, 1, False, ""),
-            ("-s", "-shell") : (0, 0, False, ""),
+            ("-s", "-shell") : (0, 0, False, shell.run),
             ("-ls", "-list") : (1, 2, True, tools.view_files), 
             ("-c", "-compare") : (2, 4, True, tools.compare_dir),
             ("-t", "-transfer") : (2, 4, True, tools.transfer_files),
@@ -47,7 +48,10 @@ def run(tokens, key):
                 final_input = tokens[:]
         else:
             final_input = tokens[:]
-        return(ACCEPTED[key][3](*final_input))
+        try:
+            return(ACCEPTED[key][3](*final_input))
+        except TypeError:
+            return "Shell closed"
     else:
         return (tokens)
 
