@@ -45,10 +45,15 @@ def list_files(folder, file_extensions=()):
                             content.append(file.name)
     return content
 
-def view_files(files):
+def view_files(folder, file_extensions=()):
     """Printing all content in a list"""
-    for  fd in files:
-        print(fd)
+    if os.path.isdir(folder):
+        files = list_files(folder, file_extensions)
+        for  fd in files:
+            print(fd)
+        return ""
+    else:
+        return "No such directory"
 
 def format_compare(dir1, dir2, d1_files, d2_files, shared, detailed):
     """Improve information presented in compare"""
@@ -73,30 +78,58 @@ def format_compare(dir1, dir2, d1_files, d2_files, shared, detailed):
     else:
         return formatted
 
-def transfer_files(dir1, dir2, interval=10, file_extensions=()):
+def transfer_files(dir1, dir2, interval_="10", file_extensions=()):
     """Transfer information from a folder to another for an specified time
         Option to limit the file extensions to pass"""
-    if os.path.exists(dir1) and os.path.isdir(dir1):
-        if os.path.exists(dir1) and os.path.isdir(dir1):
-            start = time.perf_counter()
-            trasnfered = []
-            while time.perf_counter()-start<interval:
-                try:
-                    contents = list_files(dir1, file_extensions)
-                    for content in contents:
-                        if content not in trasnfered:
-                            trasnfered.append(content)
-                            shutil.copy(dir1+"\\"+content, dir2)
-                except KeyboardInterrupt:
-                    break
-                except Exception as e:
-                    return "An ERROR ocurred: "+str(e)
-        else:
-            return "Error\nPath: "+dir2+" NOT FOUND"
+    try:
+        interval = int(interval_)
+    except Exception:
+        return "Non numeric value passed to interval"
     else:
-        return "Error\nPath: "+dir1+" NOT FOUND"
-    return "Execution Ended"
+        if os.path.exists(dir1) and os.path.isdir(dir1):
+            if os.path.exists(dir1) and os.path.isdir(dir1):
+                start = time.perf_counter()
+                trasnfered = []
+                while time.perf_counter()-start<interval:
+                    try:
+                        contents = list_files(dir1, file_extensions)
+                        for content in contents:
+                            if content not in trasnfered:
+                                trasnfered.append(content)
+                                shutil.copy(dir1+"\\"+content, dir2)
+                    except KeyboardInterrupt:
+                        break
+                    except Exception as e:
+                        return "An ERROR ocurred: "+str(e)
+            else:
+                return "Error\nPath: "+dir2+" NOT FOUND"
+        else:
+            return "Error\nPath: "+dir1+" NOT FOUND"
+        return "Execution Ended"
 
+def remove(folder, file_extensions=()):
+    """Delete a path given"""
+    if os.path.isfile(folder):
+        os.remove(folder)
+    elif os.path.isdir(folder):
+        if file_extensions:
+            content = list_files(folder, file_extensions)
+            for ct in content:
+                os.remove(folder+"\\"+ct)
+        else:
+            shutil.rmtree(folder)
+    else:
+        print("Error\nPath: "+folder+" NOT FOUND")
+
+def read(path):
+    """Read a text file and print it to console"""
+    try:
+        with open(path, "r") as rd:
+            print(rd.read())
+    except FileNotFoundError:
+        print("File Not Found")
+    except Exception:
+        print("An Error ocurred.")
 
 if __name__ == "__main__":
     pass
