@@ -1,0 +1,1 @@
+Command to test in parsing.py\nrun(*parse_entry(["-read", "D:\\PYApps\\deeplearning\\loa.txt", "024"]))

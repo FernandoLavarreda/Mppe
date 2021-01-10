@@ -6,6 +6,7 @@ import tools
 
 # Set of executable commands (aliases for command, command) : (lower-arg-limit,upper-arg-limit,ends-with-multi-args,command-to-execute)
 ACCEPTED = {("-e", "-editor") : (0, 1, False, ""),
+            ("-h", "-help") : (0, 0, False, tools.help_),
             ("-s", "-shell") : (0, 0, False, shell.run),
             ("-ls", "-list") : (1, 2, True, tools.view_files), 
             ("-c", "-compare") : (2, 4, True, tools.compare_dir),

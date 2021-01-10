@@ -58,7 +58,7 @@ def view_files(folder, file_extensions=()):
 def format_compare(dir1, dir2, d1_files, d2_files, shared, detailed):
     """Improve information presented in compare"""
     formatted = dir1+" unique files: "+str(len(d1_files))+"\n"+dir2+" unique files: "+str(len(d2_files))+"\nShared files: "+str(len(shared))
-    if detailed:
+    if detailed == "y" or detailed == "yes":
         for fd in range(len(d1_files)):
             d1_files[fd] = d1_files[fd]+"\n"
         for fd in range(len(d2_files)):
@@ -90,6 +90,7 @@ def transfer_files(dir1, dir2, interval_="10", file_extensions=()):
             if os.path.exists(dir1) and os.path.isdir(dir1):
                 start = time.perf_counter()
                 trasnfered = []
+                print("Process started. Press ctrl+c to stop before timer")
                 while time.perf_counter()-start<interval:
                     try:
                         contents = list_files(dir1, file_extensions)
@@ -115,8 +116,15 @@ def remove(folder, file_extensions=()):
         except Exception:
             return "Not able to remove file"
     elif os.path.isdir(folder):
-        if file_extensions:
+        if file_extensions and "*" not in file_extensions:
             content = list_files(folder, file_extensions)
+            for ct in content:
+                try:
+                    os.remove(folder+"\\"+ct)
+                except Exception:
+                    return "Not able to remove file"
+        elif file_extensions:
+            content = list_files(folder)
             for ct in content:
                 try:
                     os.remove(folder+"\\"+ct)
@@ -140,6 +148,20 @@ def read(path):
         return "File Not Found"
     except Exception:
         return "An Error ocurred."
+
+def help_():
+    """Basic introduction to the program"""
+    info = """Welcome to Multi Purpose Py Edit:
+    Commands                        Arguments                                               Description
+    -s  -shell                                                                              Open interactive shell
+    -h  -help                                                                               See commands and description
+    -e  -editor                             optional: 'path'                                Open editor with given file if provided
+    -ls -list       'path'                  optional: '.extension1 .extension2 ...'         List contents of path . to refer to cwd. Option to provide file ext
+    -c  -compare    'path1' 'path2'         optional: 'detailed' '.ext1 .ext2 ...'          Compare contents between two files
+    -t  -transfer   'path1' 'path2'         optional: 'int' '.ext1 .ext2 ...'               Copy specified content from path1 to path2 during 'int' time(default 3s). 
+    -r  -read       'path'                                                                  Read contents of text file
+    -rm -remove     'path'                  optional: '.ext1 .ext2'                         Remove given path if extensions given only those files"""
+    return info
 
 if __name__ == "__main__":
     pass

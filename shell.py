@@ -33,12 +33,12 @@ def parse(key, args_):
         print("Incorrect number of arguments")
 
 class Mppe(cmd.Cmd):
-    intro = "Welcome to Multi Purpose Py Edit. Type help to list commands. To exit press ctrl+c"
+    intro = "Welcome to Multi Purpose Py Edit. Type help to list commands. To exit press ctrl+c.\nArguments in shell sep using: ''"
     prompt = "&> "
 
     def do_compare(self, arg):
         """Compare the files between two folders, may specify certain extensions and detailed to show comparisons:
-           &> compare 'path1' 'path2' 'detailed' '.ext1 .ext2 .ext3' """
+           &> compare 'path1' 'path2' 'detailed ('yes' or 'y' else no detalied description)' '.ext1 .ext2 .ext3' """
         parse("compare", arg)
 
     def do_list(self, arg):
