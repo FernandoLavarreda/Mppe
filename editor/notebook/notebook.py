@@ -1,8 +1,8 @@
 # Fernando José Lavarreda Urizar
 # fernandolavarredau@gmail.com
-"""Series if tabs to open the text frames"""
+"""Series of tabs to open the text frames"""
 
-import textFrame as txf
+import notebook.textFrame as txf
 import tkinter as tk
 import tkinter.ttk as ttk
 
@@ -11,8 +11,14 @@ class NoteBook(ttk.Notebook):
         super().__init__(parent)
         self.enable_traversal()
     
-    def addFrame(self, textFrame):
-        """Add a new textFrame"""
+    def addFrame(self, textFrame, bindings={}):
+        """Add a new textFrame, to add the bindings to the correspondign frames provide
+        key= the secuence or trigger i.e. '<Control-KeyPress-a>' 
+        value= funtion call
+        The binding is also added to the text Widget on the frame"""
+        for key, value in bindings.items():
+            textFrame.bind(key, value)
+            textFrame.text.bind(key, value)
         super().add(textFrame, text=textFrame.getName(), underline=0, sticky=tk.NE+tk.SW)
     
     def deleteCurrentTab(self):
@@ -35,7 +41,13 @@ class NoteBook(ttk.Notebook):
             if str(item)==self.select():
                 item.dumpIntoFile(False, filePath)       
                 return
-
+    
+    def getSelectedFrame(self):
+        """Obtain the selected textFrame on the notebook"""
+        for item in self.winfo_children():
+            if str(item)==self.select():
+                return (True, item)
+        return (False,)
 
 """
 Class to test the functionality of the notebook created

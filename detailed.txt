@@ -1,13 +1,27 @@
-. unique files: 0
-. unique files: 0
-Shared files: 2
+d:\pyapps\#personal unique files: 5
+d:\pyapps\mppe unique files: 10
+Shared files: 1
 
 Shared:
+__pycache__
+
+
+d:\pyapps\#personal unique: 
+data.db
+db_manipulation.py
+INFO_DONT_SHARE.txt
+main.py
+README.md
+
+
+d:\pyapps\mppe unique:
+.git
+.vscode
+close
+cls
 detailed.txt
 log.txt
-
-
-. unique: 
-
-
-. unique:
+mppe.py
+parsing.py
+shell.py
+tools.py

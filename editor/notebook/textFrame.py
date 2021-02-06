@@ -33,6 +33,10 @@ class TextFrame(ttk.Frame):
         self.path = path
         self.setName()
     
+    def getPath(self):
+        """Obtain the path of the file"""
+        return self.path
+    
     def loadFromFile(self):
         """If a path was provided text is loaded from the given file"""
         if self.path:
