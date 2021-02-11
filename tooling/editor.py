@@ -2,12 +2,12 @@
 # fernandolavarredau@gmail.com
 """Text Editor with commandline and tree view"""
 
-from notebook import notebook
-from notebook import textFrame
+from .notebook import notebook, textFrame
 import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.filedialog as fd
-from commandline import shell
+from .commandline import shell
+from . import tools
 
 class Editor(tk.Tk):
     """Main window tih the notebook, tree view and command line
@@ -31,6 +31,13 @@ class Editor(tk.Tk):
 
         for binding, callback in self.binds.items():
             self.files.bind(binding, callback)
+
+        self.shell.addComand("compare",(tools.compare_dir,(2,4)))
+        self.shell.addComand("transfer",(tools.transfer_files,(2,4)))
+        self.shell.addComand("list",(tools.view_files,(1,2)))
+        self.shell.addComand("remove",(tools.remove,(1,2)))
+        self.shell.addComand("read",(tools.read,(1,1)))
+        self.shell.addComand("help",(tools.help_,(0,0)))
 
         filemn.add_command(label="New File Ctrl-N", command=self.newFile)
         filemn.add_command(label="Open File Ctrl-O", command=self.openFile)
@@ -106,6 +113,9 @@ class Editor(tk.Tk):
         """Set the focus on the text editor"""
         self.files.getSelectedFrame()[1].text.focus_set()
 
+def run(startOpen=""):
+    edt = Editor(startOpen=startOpen)
+    edt.mainloop()
 
 if __name__ == "__main__":
     edt = Editor()

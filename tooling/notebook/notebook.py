@@ -2,7 +2,7 @@
 # fernandolavarredau@gmail.com
 """Series of tabs to open the text frames"""
 
-import notebook.textFrame as txf
+from . import textFrame as txf
 import tkinter as tk
 import tkinter.ttk as ttk
 

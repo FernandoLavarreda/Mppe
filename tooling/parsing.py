@@ -1,11 +1,10 @@
 # Fernando José Lavarreda Urizar
 # fernandolavarredau@gmail.com
 """Parse User commands"""
-import shell
-import tools
+from . import tools, shell, editor
 
 # Set of executable commands (aliases for command, command) : (lower-arg-limit,upper-arg-limit,ends-with-multi-args,command-to-execute)
-ACCEPTED = {("-e", "-editor") : (0, 1, False, ""),
+ACCEPTED = {("-e", "-editor") : (0, 1, False, editor.run),
             ("-h", "-help") : (0, 0, False, tools.help_),
             ("-s", "-shell") : (0, 0, False, shell.run),
             ("-ls", "-list") : (1, 2, True, tools.view_files), 
@@ -26,7 +25,7 @@ def parse_entry(tokens_):
         if len(tokens)>1:
             return "Too many arguments", ()
         else:
-            return tokens, ("-e, -editor")
+            return tokens, ("-e", "-editor")
     else:
         position = valid.index(tokens[0])
         if position %2 != 0:

@@ -3,7 +3,7 @@
 """Shell to interact with Multi Purpose Py Edit"""
 import cmd
 import time
-import tools
+from . import tools
 
 ACCEPTED = {"compare" : (2, 4, True, tools.compare_dir),
             "transfer" : (2, 4, True, tools.transfer_files),

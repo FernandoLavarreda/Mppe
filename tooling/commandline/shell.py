@@ -15,6 +15,7 @@ class Cmd(ttk.Frame):
         self.input = tk.StringVar()
         self.commands = {}
         self.stack_of_calls = []
+        self.cursor = -1
         self.shell = ttk.Entry(self, textvariable=self.input)
         self.stdout = ttk.Label(self, textvariable=self.output)
         if img:

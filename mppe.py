@@ -3,8 +3,9 @@
 # Multi Purpose Py Edit
 # Free software
 import sys
-import parsing
+from tooling import parsing
 
 if __name__ == "__main__":
-    arguments = sys.argv[1:]
-    print(parsing.run(*parsing.parse_entry(arguments)))
+    if len(sys.argv)>1:
+        arguments = sys.argv[1:]
+        print(parsing.run(*parsing.parse_entry(arguments)))
