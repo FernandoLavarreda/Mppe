@@ -7,6 +7,7 @@ from notebook import textFrame
 import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.filedialog as fd
+from commandline import shell
 
 class Editor(tk.Tk):
     """Main window tih the notebook, tree view and command line
@@ -17,12 +18,15 @@ class Editor(tk.Tk):
         menu = tk.Menu(self)
         filemn = tk.Menu(menu, tearoff=0)
         self.files = notebook.NoteBook(self)
+        self.shell = shell.Cmd(self, "D:/Icons/command.png")
+        # Bindigns for the notebook and its children
         self.binds = {
              "<Control-KeyPress-n>": self.newFile,
              "<Control-KeyPress-o>": self.openFile,
              "<Control-KeyPress-s>": self.saveFile,
              "<Control-KeyPress-t>": self.saveAs,
              "<Control-KeyPress-w>": self.closeFile,
+             "<Control-KeyRelease-Down>": self.focus_shell,
             }
 
         for binding, callback in self.binds.items():
@@ -43,8 +47,11 @@ class Editor(tk.Tk):
         else:
             self.newFile()
 
+        self.shell.shell.bind("<Control-KeyRelease-Up>", self.focus_editor)
         self.files.grid(row=0, column=0)
+        self.shell.grid(row=1, column=0, sticky=tk.NE+tk.SW)
         self.config(menu=menu)
+        self.focus_editor()
     
     def newFile(self, *args):
         """Add new file to editor"""
@@ -90,6 +97,14 @@ class Editor(tk.Tk):
         if self.files.index("end")>1:
             self.files.deleteCurrentTab()
             self.files.getSelectedFrame()[1].focus_set()
+    
+    def focus_shell(self, *args):
+        """Set the focus on the prompt for commands"""
+        self.shell.shell.focus_set()
+    
+    def focus_editor(self, *args):
+        """Set the focus on the text editor"""
+        self.files.getSelectedFrame()[1].text.focus_set()
 
 
 if __name__ == "__main__":
