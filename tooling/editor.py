@@ -15,6 +15,7 @@ class Editor(tk.Tk):
     is not provided a new file will be opened"""
     def __init__(self, startOpen=""):
         super().__init__()
+        self.resizable(False, False)
         menu = tk.Menu(self)
         filemn = tk.Menu(menu, tearoff=0)
         self.files = notebook.NoteBook(self)
@@ -115,8 +116,11 @@ class Editor(tk.Tk):
 
 def run(startOpen=""):
     edt = Editor(startOpen=startOpen)
-    edt.mainloop()
+    try:
+        edt.mainloop()
+    except KeyboardInterrupt:
+        return("Forced Exit")
 
 if __name__ == "__main__":
-    edt = Editor()
-    edt.mainloop()
+        edt = Editor()
+        edt.mainloop()

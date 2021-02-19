@@ -17,7 +17,19 @@ class Cmd(ttk.Frame):
         self.stack_of_calls = []
         self.cursor = -1
         self.shell = ttk.Entry(self, textvariable=self.input)
-        self.stdout = ttk.Label(self, textvariable=self.output)
+
+        # Frame for output
+        frame = tk.Canvas(self, scrollregion=(0, 0, 1000, 1000))
+        subframe = ttk.Frame(frame)
+        self.stdout = ttk.Label(subframe, textvariable=self.output)
+        self.stdout.pack()
+        frame.create_window(0,0, window=subframe, anchor=tk.NE)
+        subframe.pack()
+        self.yview = tk.Scrollbar(self)
+        self.yview.config(command=frame.yview)
+        frame.config(yscrollcommand=self.yview.set)      
+        
+
         if img:
             try:
                 image = ImageTk.PhotoImage(Image.open(img).resize((15, 15), Image.ANTIALIAS))
@@ -32,11 +44,13 @@ class Cmd(ttk.Frame):
         self.shell.bind("<KeyRelease-Up>", self.historyUp)
         self.shell.bind("<KeyRelease-Down>", self.historyDown)
         self.rowconfigure(0, weight=0)
-        self.rowconfigure(1, weight=1)
+        self.rowconfigure(1, weight=0)
         self.grid_columnconfigure(0, weight=0)
         self.grid_columnconfigure(1, weight=1)
         self.shell.grid(row=0, column=1, columnspan=1, sticky=tk.NE+tk.SW)
-        self.stdout.grid(row=1, column=0, columnspan=2)
+        self.yview.grid(row=1, column=0)
+        frame.grid(row=1, column=1, columnspan=1)
+        
     
     def addComand(self, alias, command):
         """Add a funtion to be executed on the commandline

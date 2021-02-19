@@ -49,9 +49,10 @@ def view_files(folder, file_extensions=()):
     """Printing all content in a list"""
     if os.path.isdir(folder):
         files = list_files(folder, file_extensions)
+        reading = ""
         for  fd in files:
-            print(fd)
-        return ""
+            reading += fd+"\n"
+        return reading
     else:
         return "No such directory"
 

@@ -1,27 +1,27 @@
-d:\pyapps\#personal unique files: 5
-d:\pyapps\mppe unique files: 10
+d:\thrash unique files: 15
+. unique files: 0
 Shared files: 1
 
 Shared:
-__pycache__
-
-
-d:\pyapps\#personal unique: 
-data.db
-db_manipulation.py
-INFO_DONT_SHARE.txt
-main.py
-README.md
-
-
-d:\pyapps\mppe unique:
-.git
-.vscode
-close
-cls
-detailed.txt
-log.txt
 mppe.py
+
+
+d:\thrash unique: 
+foo.py
+inter.py
+lab.py
+loa.py
+newtonP1.py
+oc.py
+ole.py
 parsing.py
+practising.py
+rfc.py
+secanteP2.py
 shell.py
+spoof.py
+testing.py
 tools.py
+
+
+. unique:
