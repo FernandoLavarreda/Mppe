@@ -21,7 +21,7 @@ def parse_entry(tokens_):
     valid = []
     for token in ACCEPTED.keys():
         valid+=token
-    if tokens[0] not in valid:
+    if len(tokens) == 0 or tokens[0] not in valid:
         if len(tokens)>1:
             return "Too many arguments", ()
         else:

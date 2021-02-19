@@ -6,6 +6,5 @@ import sys
 from tooling import parsing
 
 if __name__ == "__main__":
-    if len(sys.argv)>1:
-        arguments = sys.argv[1:]
-        print(parsing.run(*parsing.parse_entry(arguments)))
+    arguments = sys.argv[1:]
+    print(parsing.run(*parsing.parse_entry(arguments)))
